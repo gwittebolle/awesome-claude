@@ -33,17 +33,27 @@ AI assistant by Anthropic for complex reasoning, code generation, and analysis t
 
 **The authoritative source for everything Claude -  directly from Anthropic**
 
-### 🧠 Current Models (Claude 4.6 Family - Early 2026)
+### 🧠 Current Models (Claude 5 Family - 2026)
 
-- **Claude Opus 4.6** (Feb 5, 2026) -  Anthropic's most capable model ever. Best-in-class for coding, long-horizon agents, large codebases, debugging, financial analysis, and enterprise workflows. New: 1M token context window (beta), adaptive thinking (dynamic reasoning depth), agent teams, context compaction. SOTA on Terminal-Bench 2.0, GDPval-AA (+190 Elo over Opus 4.5), Humanity's Last Exam, BrowseComp. [Announcement](https://www.anthropic.com/news/claude-opus-4-6) | [System Card](https://www.anthropic.com/claude-opus-4-6-system-card)
-- **Claude Sonnet 4.6** (Feb 17, 2026) -  Best balance of intelligence, speed, and cost. Near-Opus performance on coding, computer use (multi-tab forms, spreadsheets), and professional tasks. Now the default model for many plans. [Announcement](https://www.anthropic.com/news/claude-sonnet-4-6)
-- **Claude Haiku 4.5** (Oct 2025) -  Fastest model with near-frontier intelligence. Perfect for high-volume, real-time, and sub-agent tasks. [Announcement](https://www.anthropic.com/news/claude-haiku-4-5)
+- **Claude Fable 5** (Jun 9, 2026) -  Anthropic's most capable widely released model: next-generation intelligence for long-running agents and the most demanding reasoning work. Adaptive thinking is always on (the `thinking` parameter is rejected) and the raw chain of thought is never returned - you get summaries via `display: "summarized"`. Requires 30-day data retention (not available under zero data retention), and safety classifiers can return `stop_reason: "refusal"`, so handle that before reading response content. [Launch details & API changes](https://platform.claude.com/docs/en/about-claude/models/introducing-claude-fable-5-and-claude-mythos-5) | [System Card](https://www.anthropic.com/claude-fable-5-system-card)
+- **Claude Opus 5** (Jul 24, 2026) -  The default choice for complex agentic coding and enterprise work, and a step change over Opus 4.8 on deep reasoning, long-horizon agentic execution, and test-time compute scaling - at half the price of Fable 5. Thinking is now **on by default** (omitting `thinking` runs adaptive), the full `low`→`max` effort ladder is supported, and the prompt-cache minimum drops to 512 tokens. Fast mode (`speed: "fast"`) is available on the Claude API only. [Announcement](https://www.anthropic.com/news/claude-opus-5) | [Migration guide](https://platform.claude.com/docs/en/about-claude/models/migration-guide) | [System Card](https://www.anthropic.com/claude-opus-5-system-card)
+- **Claude Sonnet 5** (Jun 30, 2026) -  The best combination of speed and intelligence, reaching what used to be Opus-tier quality on coding and agentic tasks. First Sonnet-tier model with the `xhigh` effort level and high-resolution vision (2,576px long edge). Uses the newer tokenizer, so the same text produces ~30% more tokens than Sonnet 4.6 - re-baseline your token budgets. [Announcement](https://www.anthropic.com/news/claude-sonnet-5) | [System Card](https://www.anthropic.com/claude-sonnet-5-system-card)
+- **Claude Haiku 4.5** (Oct 2025) -  Still the fastest model with near-frontier intelligence. Perfect for high-volume, real-time, and sub-agent tasks. [Announcement](https://www.anthropic.com/news/claude-haiku-4-5)
 
 **Key specs (API):**  
-- Opus 4.6: `claude-opus-4-6` • $5/$25 per MTok • 200K standard / 1M beta context  
-- Sonnet 4.6: `claude-sonnet-4-6` • $3/$15 per MTok • 200K standard / 1M beta context  
-- Haiku 4.5: `claude-haiku-4-5` • $1/$5 per MTok • 200K context  
-Premium pricing for >200K tokens. Full comparison: [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview)
+- Fable 5: `claude-fable-5` • $10/$50 per MTok • 1M context • 128K max output  
+- Opus 5: `claude-opus-5` • $5/$25 per MTok • 1M context • 128K max output  
+- Sonnet 5: `claude-sonnet-5` • $3/$15 per MTok ($2/$10 introductory through Aug 31, 2026) • 1M context • 128K max output  
+- Haiku 4.5: `claude-haiku-4-5` • $1/$5 per MTok • 200K context • 64K max output  
+
+Model IDs from the 4.6 generation onward are dateless but still pinned snapshots, not evergreen pointers - see [Model IDs and versioning](https://platform.claude.com/docs/en/about-claude/models/model-ids-and-versions). Full comparison: [Models overview](https://platform.claude.com/docs/en/about-claude/models/overview) | [Pricing](https://platform.claude.com/docs/en/about-claude/pricing)
+
+**Also available**
+
+- **Claude Mythos 5** (`claude-mythos-5`) -  Same specs and pricing as Fable 5, offered for defensive cybersecurity workflows through [Project Glasswing](https://www.anthropic.com/glasswing). Invitation-only, no self-serve sign-up.
+- **Previous generations (still active):** Opus 4.8 (`claude-opus-4-8`, [May 28, 2026](https://www.anthropic.com/news/claude-opus-4-8)), Opus 4.7 (`claude-opus-4-7`, [Apr 16, 2026](https://www.anthropic.com/news/claude-opus-4-7) - introduced high-resolution vision, the `xhigh` effort level, and task budgets), Opus 4.6 (`claude-opus-4-6`, [Feb 5, 2026](https://www.anthropic.com/news/claude-opus-4-6) - introduced the 1M context window and adaptive thinking), and Sonnet 4.6 (`claude-sonnet-4-6`, [Feb 17, 2026](https://www.anthropic.com/news/claude-sonnet-4-6)).
+
+**Migrating?** Extended thinking with a fixed `budget_tokens`, the sampling parameters (`temperature`/`top_p`/`top_k`), and last-assistant-turn prefills all return a 400 on the Claude 5 family. Use [adaptive thinking](https://platform.claude.com/docs/en/build-with-claude/adaptive-thinking) plus the [effort parameter](https://platform.claude.com/docs/en/build-with-claude/effort) instead, and structured outputs in place of prefills. Full list: [Migration guide](https://platform.claude.com/docs/en/about-claude/models/migration-guide).
 
 ### 🔌 API & Developer Platform
 
@@ -75,9 +85,10 @@ Premium pricing for >200K tokens. Full comparison: [Models overview](https://pla
 
 ### ☁️ Cloud Providers
 
-**Official access to Claude models through cloud providers** (all support Opus 4.6 / Sonnet 4.6)
+**Official access to Claude models through cloud providers** (all carry the Claude 5 family - Fable 5, Opus 5, Sonnet 5)
 
-- **[Amazon Bedrock](https://aws.amazon.com/bedrock/anthropic/)** -  Fully managed access to the latest Claude models (Opus 4.6, Sonnet 4.6, Haiku 4.5). Supports cross-region inference (new regions: Thailand, Malaysia, Singapore, Indonesia, Taiwan), latency optimizations, fine-tuning, agents, guardrails, and deep AWS integration.
+- **[Amazon Bedrock](https://aws.amazon.com/bedrock/anthropic/)** -  Fully managed access to the latest Claude models (Fable 5, Opus 5, Sonnet 5, Haiku 4.5). Claude 5 models are served through the Messages-API Bedrock endpoint and take an `anthropic.` ID prefix (e.g. `anthropic.claude-opus-5`). Supports cross-region inference, latency optimizations, fine-tuning, agents, guardrails, and deep AWS integration.
+- **[Claude Platform on AWS](https://platform.claude.com/docs/en/build-with-claude/claude-platform-on-aws)** -  Anthropic-operated access via AWS infrastructure: SigV4 auth, IAM access control, AWS Marketplace billing, and same-day API parity with the first-party API. Model IDs are the bare first-party strings (no `anthropic.` prefix) - not the same thing as Bedrock.
 - **[Google Cloud Vertex AI Model Garden](https://cloud.google.com/products/model-garden/claude)** -  Deploy Claude models with provisioned throughput, prompt caching, batch predictions, grounding, and enterprise compliance (FedRAMP High). Great for building agents with Google Cloud tools.
 - **[Microsoft Azure AI Model Catalog (Anthropic Publisher)](https://ai.azure.com/catalog/publishers/anthropic)** -  Claude models via the AI Model Catalog. Supports serverless deployment, agent building, tool integration, fine-tuning, and billing through existing Azure agreements.
 
@@ -87,6 +98,11 @@ Premium pricing for >200K tokens. Full comparison: [Models overview](https://pla
 
 - [Transparency Hub](https://www.anthropic.com/transparency) -  Overview of safety evaluations and improvements across models.
 - [All System Cards](https://www.anthropic.com/system-cards) -  Index of all model system cards.
+  - [Claude Opus 5 System Card](https://www.anthropic.com/claude-opus-5-system-card) -  Capability and safety report (Jul 2026).
+  - [Claude Fable 5 System Card](https://www.anthropic.com/claude-fable-5-system-card) -  Capability and safety report (Jun 2026).
+  - [Claude Sonnet 5 System Card](https://www.anthropic.com/claude-sonnet-5-system-card) -  Detailed evaluations (Jun 2026).
+  - [Claude Opus 4.8 System Card](https://www.anthropic.com/claude-opus-4-8-system-card) -  Capability and safety report (May 2026).
+  - [Claude Opus 4.7 System Card](https://www.anthropic.com/claude-opus-4-7-system-card) -  Capability and safety report (Apr 2026).
   - [Claude Opus 4.6 System Card](https://www.anthropic.com/claude-opus-4-6-system-card) -  Capability and safety report (Feb 2026).
   - [Claude Sonnet 4.6 System Card](https://www.anthropic.com/claude-sonnet-4-6-system-card) -  Detailed evaluations (Feb 2026).
   - [Claude Opus 4.5 System Card](https://assets.anthropic.com/m/64823ba7485345a7/Claude-Opus-4-5-System-Card.pdf) -  Comprehensive capability and safety report (Nov 2025).
@@ -181,7 +197,7 @@ Open standard (Linux Foundation) for connecting Claude to tools, repos, database
 
 ### 📹 Video Tutorials
 
-- [Claude Video Tutorials](https://support.claude.com/en/collections/10548294-video-tutorials) -  Official video tutorials from Claude Support.
+- [Anthropic on YouTube](https://www.youtube.com/@anthropic-ai) -  Official video tutorials, model launches, and deep dives.
 
 ### 📖 Community Guides
 
